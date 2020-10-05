@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap';
 import Rating from '../components/Rating';
-import products from '../products';
 
 const ProductDetailScreen = ({ match }) => {
-  // get the product by id
-  // After we build backend, it'll come from backend
-  // For now, just find in the temporary products array
-  const product = products.find((item) => item._id === match.params.id);
+  const [product, setProduct] = useState({});
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data } = await axios.get(
+        `http://localhost:5000/products/${match.params.id}`
+      );
+      setProduct(data);
+    };
+    fetchProduct();
+  }, []);
 
   return (
     <div>
