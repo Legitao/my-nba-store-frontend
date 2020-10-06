@@ -9,7 +9,7 @@ const ProductDetailScreen = ({ match }) => {
   useEffect(() => {
     const fetchProduct = async () => {
       const { data } = await axios.get(
-        `http://localhost:5000/products/${match.params.id}`
+        `http://localhost:5000/api/products/${match.params.id}`
       );
       setProduct(data);
     };
