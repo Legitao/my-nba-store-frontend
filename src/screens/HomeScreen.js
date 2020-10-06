@@ -14,7 +14,7 @@ const HomeScreen = () => {
       console.log('products', products);
     };
     fetchProducts();
-  }, []);
+  }, [products]);
 
   return (
     <>

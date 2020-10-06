@@ -14,7 +14,7 @@ const ProductDetailScreen = ({ match }) => {
       setProduct(data);
     };
     fetchProduct();
-  }, []);
+  }, [match.params.id]);
 
   // useEffect happens after the render, so the initial render won't have data ready
   // Rating component will show warning because it set props to be required
