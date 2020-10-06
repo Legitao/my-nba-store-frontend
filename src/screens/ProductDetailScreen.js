@@ -16,7 +16,12 @@ const ProductDetailScreen = ({ match }) => {
     fetchProduct();
   }, []);
 
-  return (
+  // useEffect happens after the render, so the initial render won't have data ready
+  // Rating component will show warning because it set props to be required
+  // So check if product is empty object to conditionally render the component
+  return Object.keys(product).length === 0 && product.constructor === Object ? (
+    <h1>loading</h1>
+  ) : (
     <div>
       <Link className='btn btn-light my-3' to='/'>
         Go Back
