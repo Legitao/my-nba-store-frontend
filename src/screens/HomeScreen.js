@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
 import Product from '../components/Product';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
 import { listProducts } from '../actions/productActions';
 
 const HomeScreen = () => {
@@ -17,9 +19,9 @@ const HomeScreen = () => {
   return (
     <>
       {pending ? (
-        <h2>loading products</h2>
+        <Loader />
       ) : error ? (
-        <h3>error</h3>
+        <Message variant='danger'>{error}</Message>
       ) : (
         <div>
           <h1>Product List</h1>
