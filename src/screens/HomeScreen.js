@@ -12,31 +12,29 @@ const HomeScreen = () => {
   const { pending, products, error } = productList;
 
   useEffect(() => {
-    console.log('dispatch');
     dispatch(listProducts());
   }, [dispatch]);
 
-  return (
-    <>
-      {pending ? (
-        <Loader />
-      ) : error ? (
-        <Message variant='danger'>{error}</Message>
-      ) : (
-        <div>
-          <h1>Product List</h1>
-          <Row>
-            {products.map((product) => {
-              return (
-                <Col sm={12} md={6} lg={4} xl={3} key={product._id}>
-                  <Product product={product} />
-                </Col>
-              );
-            })}
-          </Row>
-        </div>
-      )}
-    </>
+  return pending ? (
+    // loader
+    <Loader />
+  ) : error ? (
+    // error message
+    <Message variant='danger'>{error}</Message>
+  ) : (
+    // product list screen
+    <div>
+      <h1>Product List</h1>
+      <Row>
+        {products.map((product) => {
+          return (
+            <Col sm={12} md={6} lg={4} xl={3} key={product._id}>
+              <Product product={product} />
+            </Col>
+          );
+        })}
+      </Row>
+    </div>
   );
 };
 
