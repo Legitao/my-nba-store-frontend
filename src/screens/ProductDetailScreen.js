@@ -14,6 +14,7 @@ import Rating from '../components/Rating';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { showProductDetails } from '../actions/productActions';
+import { addToCart } from '../actions/cartActions';
 
 const ProductDetailScreen = ({ match, history }) => {
   // component level state
@@ -30,8 +31,9 @@ const ProductDetailScreen = ({ match, history }) => {
   }, [dispatch, match.params.id]);
 
   const addToCardHandler = () => {
+    dispatch(addToCart(match.params.id, qty));
     // redirect to CartScreen
-    history.push(`/cart/${match.params.id}?qty=${qty}`);
+    history.push(`/cart`);
   };
   // useEffect happens after the render, so the initial render won't have data ready
   // Rating component will show warning because it set props to be required

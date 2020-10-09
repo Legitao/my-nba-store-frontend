@@ -14,21 +14,9 @@ import Message from '../components/Message';
 import { addToCart, removeFromCart } from '../actions/cartActions';
 
 const CartScreen = ({ match, location, history }) => {
-  // if cart is accessed through ProductDetailsScreen, the path will have id and query
-  // else it's accessed through cart button in Header, the path is only '/cart'
-  const id = match.params.id;
-  // location.search will be like '?qty=3'
-  const qty = id ? Number(location.search.split('=')[1]) : 0;
-
   const { cartItems } = useSelector((rootState) => rootState.cart);
   console.log('initial state', cartItems);
   const dispatch = useDispatch();
-  useEffect(() => {
-    if (id) {
-      dispatch(addToCart(id, qty));
-      console.log('after refresh state', cartItems);
-    }
-  }, [dispatch, id, qty]); // if don't put second argument, it's fired infinitely
 
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
