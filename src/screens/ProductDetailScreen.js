@@ -15,9 +15,9 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { showProductDetails } from '../actions/productActions';
 
-const ProductDetailScreen = ({ match }) => {
+const ProductDetailScreen = ({ match, history }) => {
   // component level state
-  const [qty, setQty] = useState(0);
+  const [qty, setQty] = useState(1);
 
   // app level state from redux
   const productDetails = useSelector((rootState) => rootState.productDetails);
@@ -29,6 +29,10 @@ const ProductDetailScreen = ({ match }) => {
     dispatch(showProductDetails(match.params.id));
   }, [dispatch, match.params.id]);
 
+  const addToCardHandler = () => {
+    // redirect to CartScreen
+    history.push(`/cart/${match.params.id}?qty=${qty}`);
+  };
   // useEffect happens after the render, so the initial render won't have data ready
   // Rating component will show warning because it set props to be required
   // Solution: use a guard to check if pending is undefined(means this component hasn't dispatch action)
@@ -65,7 +69,9 @@ const ProductDetailScreen = ({ match }) => {
                     numReviews={product.numReviews}
                   />
                 </ListGroup.Item>
-                <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
+                <ListGroup.Item>
+                  Price: ${product.price.toFixed(2)}
+                </ListGroup.Item>
                 <ListGroup.Item>
                   Description: {product.description}
                 </ListGroup.Item>
@@ -122,6 +128,7 @@ const ProductDetailScreen = ({ match }) => {
                       className='btn-block'
                       type='button'
                       disabled={product.countInStock === 0}
+                      onClick={addToCardHandler}
                     >
                       Add To Cart
                     </Button>
