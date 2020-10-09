@@ -11,7 +11,9 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
         new_state = {
           ...state,
           cartItems: state.cartItems.map((item) =>
-            item.id === existItem.id ? action.payload : item
+            item.id === existItem.id
+              ? { ...item, qty: item.qty + action.payload.qty }
+              : item
           ),
         };
       } else {
@@ -20,6 +22,16 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
           cartItems: [...state.cartItems, action.payload],
         };
       }
+      return new_state;
+    case actions.CART_UPDATE_QTY:
+      new_state = {
+        ...state,
+        cartItems: state.cartItems.map((item) =>
+          item.id === action.payload.id
+            ? { ...item, qty: action.payload.qty }
+            : item
+        ),
+      };
       return new_state;
     case actions.CART_REMOVE:
       new_state = {

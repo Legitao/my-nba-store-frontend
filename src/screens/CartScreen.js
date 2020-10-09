@@ -11,7 +11,7 @@ import {
   Card,
 } from 'react-bootstrap';
 import Message from '../components/Message';
-import { addToCart, removeFromCart } from '../actions/cartActions';
+import { updateQtyInCart, removeFromCart } from '../actions/cartActions';
 
 const CartScreen = ({ match, location, history }) => {
   const { cartItems } = useSelector((rootState) => rootState.cart);
@@ -44,13 +44,15 @@ const CartScreen = ({ match, location, history }) => {
                   <Col md={3}>
                     <Link to={`/products/${item.id}`}>{item.name}</Link>
                   </Col>
-                  <Col md={2}>${item.price}</Col>
+                  <Col md={2}>${item.price.toFixed(2)}</Col>
                   <Col md={2}>
                     <Form.Control
                       as='select'
                       value={item.qty}
                       onChange={(e) =>
-                        dispatch(addToCart(item.id, Number(e.target.value)))
+                        dispatch(
+                          updateQtyInCart(item.id, Number(e.target.value))
+                        )
                       }
                     >
                       {[...Array(item.countInStock).keys()].map((x) => (

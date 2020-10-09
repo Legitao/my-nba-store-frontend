@@ -23,7 +23,9 @@ const ProductDetailScreen = ({ match, history }) => {
   // app level state from redux
   const productDetails = useSelector((rootState) => rootState.productDetails);
   const { pending, product, error } = productDetails;
-
+  const cartItems = useSelector((rootState) => rootState.cart.cartItems);
+  const itemInCart = cartItems.find((item) => item.id === match.params.id);
+  const itemQtyInCart = itemInCart ? itemInCart.qty : 0;
   // dispatch actions
   const dispatch = useDispatch();
   useEffect(() => {
@@ -96,11 +98,13 @@ const ProductDetailScreen = ({ match, history }) => {
                     <Row>
                       <Col>Status:</Col>
                       <Col>
-                        {product.countInStock > 0 ? 'In stock' : 'Out of stock'}
+                        {product.countInStock - itemQtyInCart > 0
+                          ? 'In stock'
+                          : 'Out of stock'}
                       </Col>
                     </Row>
                   </ListGroup.Item>
-                  {product.countInStock > 0 && (
+                  {product.countInStock - itemQtyInCart > 0 && (
                     <ListGroup.Item>
                       <Row>
                         <Col>Quantity</Col>
@@ -113,13 +117,15 @@ const ProductDetailScreen = ({ match, history }) => {
                               console.log('onchange', e.target.value);
                             }}
                           >
-                            {[...Array(product.countInStock).keys()].map(
-                              (x) => (
-                                <option key={x + 1} value={x + 1}>
-                                  {x + 1}
-                                </option>
-                              )
-                            )}
+                            {[
+                              ...Array(
+                                product.countInStock - itemQtyInCart
+                              ).keys(),
+                            ].map((x) => (
+                              <option key={x + 1} value={x + 1}>
+                                {x + 1}
+                              </option>
+                            ))}
                           </Form.Control>
                         </Col>
                       </Row>
