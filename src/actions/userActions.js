@@ -140,9 +140,8 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       type: USER_UPDATE_PROFILE_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    const { userInfo } = getState().user;
+    console.log(getState());
 
     const config = {
       headers: {

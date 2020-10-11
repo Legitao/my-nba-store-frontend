@@ -5,7 +5,7 @@ import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import { logout } from '../actions/userActions';
 
 const Header = () => {
-  const { userInfo } = useSelector((rootState) => rootState.userLogin);
+  const { userInfo } = useSelector((rootState) => rootState.user);
 
   const dispatch = useDispatch();
 

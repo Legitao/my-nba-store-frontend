@@ -3,7 +3,7 @@ import { Form, Button, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { getUserDetails, updateUserProfile } from '../actions/userActions';
+import { updateUserProfile } from '../actions/userActions';
 
 const ProfileScreen = ({ location, history }) => {
   const [name, setName] = useState('');
@@ -14,29 +14,18 @@ const ProfileScreen = ({ location, history }) => {
 
   const dispatch = useDispatch();
 
-  const userDetails = useSelector((state) => state.userDetails);
-  const { loading, error, userProfile } = userDetails;
-
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
-
-  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
-  const { success } = userUpdateProfile;
+  const user = useSelector((rootState) => rootState.user);
+  const { pending, error, updateSuccess, userInfo } = user;
 
   useEffect(() => {
     if (!userInfo) {
       // haven't logged in
       history.push('/login');
     } else {
-      if (!userProfile) {
-        //haven't fetched the profile
-        dispatch(getUserDetails('profile'));
-      } else {
-        setName(userProfile.name);
-        setEmail(userProfile.email);
-      }
+      setName(userInfo.name);
+      setEmail(userInfo.email);
     }
-  }, [dispatch, history, userInfo, userProfile]);
+  }, [history, userInfo]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -53,8 +42,8 @@ const ProfileScreen = ({ location, history }) => {
         <h2>User Profile</h2>
         {message && <Message variant='danger'>{message}</Message>}
         {error && <Message variant='danger'>{error}</Message>}
-        {success && <Message variant='success'>Profile Updated</Message>}
-        {loading && <Loader />}
+        {updateSuccess && <Message variant='success'>Profile Updated</Message>}
+        {pending && <Loader />}
         <Form onSubmit={submitHandler}>
           <Form.Group controlId='name'>
             <Form.Label>Name</Form.Label>
