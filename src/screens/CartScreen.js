@@ -23,7 +23,7 @@ const CartScreen = ({ match, location, history }) => {
   };
   // Go to /login first, if logged in, redirect to /shipping
   const checkoutHandler = () => {
-    history.push('/login?redirect=shiping');
+    history.push('/login?redirect=shipping');
   };
 
   return (
