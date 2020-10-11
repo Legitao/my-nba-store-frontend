@@ -7,6 +7,7 @@ import HomeScreen from './screens/HomeScreen';
 import ProductDetailScreen from './screens/ProductDetailScreen';
 import CartScreen from './screens/CartScreen';
 import LoginScreen from './screens/LoginScreen';
+import RegisterScreen from './screens/RegisterScreen';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           {/* id is optional for CartScreen, because we can access cart from both Header's cart button and ProductDetailsPage */}
           <Route path='/cart/:id?' component={CartScreen} />
           <Route path='/login' component={LoginScreen} />
+          <Route path='/register' component={RegisterScreen} />
         </Container>
       </main>
       <Footer />
