@@ -1,3 +1,4 @@
 export const CART_ADD = 'CART_ADD';
 export const CART_UPDATE_QTY = 'CART_UPDATE_QTY';
 export const CART_REMOVE = 'CART_REMOVE';
+export const CART_SAVE_SHIPPING_ADDRESS = 'CART_SAVE_SHIPPING_ADDRESS';

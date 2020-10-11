@@ -21,8 +21,9 @@ const CartScreen = ({ match, location, history }) => {
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
   };
+  // Go to /login first, if logged in, redirect to /shipping
   const checkoutHandler = () => {
-    console.log('checkout');
+    history.push('/login?redirect=shiping');
   };
 
   return (

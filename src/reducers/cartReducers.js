@@ -1,6 +1,9 @@
 import * as actions from '../constants/cartConstants';
 
-export const cartReducer = (state = { cartItems: [] }, action) => {
+export const cartReducer = (
+  state = { cartItems: [], shippingAddress: {} },
+  action
+) => {
   let new_state;
   switch (action.type) {
     case actions.CART_ADD:
@@ -39,6 +42,11 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
         cartItems: state.cartItems.filter((item) => item.id !== action.payload),
       };
       return new_state;
+    case actions.CART_SAVE_SHIPPING_ADDRESS:
+      return {
+        ...state,
+        shippingAddress: action.payload,
+      };
     default:
       return state;
   }
