@@ -1,16 +1,21 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import { logout } from '../actions/userActions';
+import { clearCart } from '../actions/cartActions';
 
 const Header = () => {
+  const history = useHistory();
   const { userInfo } = useSelector((rootState) => rootState.user);
 
   const dispatch = useDispatch();
 
   const logoutHandler = () => {
     dispatch(logout());
+    dispatch(clearCart());
+    history.push('/');
   };
 
   return (
@@ -35,7 +40,7 @@ const Header = () => {
                   </LinkContainer>
                   <NavDropdown.Item onClick={logoutHandler}>
                     Logout
-                  </NavDropdown.Item>
+                  </NavDropdown.Item>{' '}
                 </NavDropdown>
               ) : (
                 <LinkContainer to='/login'>
