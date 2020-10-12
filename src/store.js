@@ -7,12 +7,14 @@ import {
 } from './reducers/productReducer';
 import { cartReducer } from './reducers/cartReducers';
 import { userReducer } from './reducers/userReducers';
+import { orderCreateReducer } from './reducers/orderReducers';
 
 const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
   cart: cartReducer,
   user: userReducer,
+  orderCreate: orderCreateReducer,
 });
 
 //

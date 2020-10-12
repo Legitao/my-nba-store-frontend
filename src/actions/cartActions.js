@@ -1,15 +1,15 @@
 import axios from 'axios';
 import * as actions from '../constants/cartConstants';
 
-export const addToCart = (id, qty) => async (dispatch, getState) => {
+export const addToCart = (productId, qty) => async (dispatch, getState) => {
   const { data } = await axios.get(
-    `${process.env.REACT_APP_API_URL}/api/products/${id}`
+    `${process.env.REACT_APP_API_URL}/api/products/${productId}`
   );
   console.log('data', data);
   const action = {
     type: actions.CART_ADD,
     payload: {
-      id: data._id,
+      productId: data._id,
       name: data.name,
       image: data.image,
       price: data.price,
@@ -25,18 +25,18 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
   localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
 };
 
-export const updateQtyInCart = (id, qty) => (dispatch, getState) => {
+export const updateQtyInCart = (productId, qty) => (dispatch, getState) => {
   const action = {
     type: actions.CART_UPDATE_QTY,
-    payload: { id, qty },
+    payload: { productId, qty },
   };
   dispatch(action);
 };
 
-export const removeFromCart = (id) => (dispatch, getState) => {
+export const removeFromCart = (productId) => (dispatch, getState) => {
   const action = {
     type: actions.CART_REMOVE,
-    payload: id,
+    payload: productId,
   };
   dispatch(action);
 

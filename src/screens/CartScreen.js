@@ -18,8 +18,8 @@ const CartScreen = ({ match, location, history }) => {
   console.log('initial state', cartItems);
   const dispatch = useDispatch();
 
-  const removeFromCartHandler = (id) => {
-    dispatch(removeFromCart(id));
+  const removeFromCartHandler = (productId) => {
+    dispatch(removeFromCart(productId));
   };
   // Go to /login first, if logged in, redirect to /shipping
   const checkoutHandler = () => {
@@ -37,13 +37,13 @@ const CartScreen = ({ match, location, history }) => {
         ) : (
           <ListGroup variant='flush'>
             {cartItems.map((item) => (
-              <ListGroup.Item key={item.id}>
+              <ListGroup.Item key={item.productId}>
                 <Row>
                   <Col md={2}>
                     <Image src={item.image} alt={item.name} fluid rounded />
                   </Col>
                   <Col md={3}>
-                    <Link to={`/products/${item.id}`}>{item.name}</Link>
+                    <Link to={`/products/${item.productId}`}>{item.name}</Link>
                   </Col>
                   <Col md={2}>${item.price.toFixed(2)}</Col>
                   <Col md={2}>
@@ -52,7 +52,10 @@ const CartScreen = ({ match, location, history }) => {
                       value={item.qty}
                       onChange={(e) =>
                         dispatch(
-                          updateQtyInCart(item.id, Number(e.target.value))
+                          updateQtyInCart(
+                            item.productId,
+                            Number(e.target.value)
+                          )
                         )
                       }
                     >
@@ -67,7 +70,7 @@ const CartScreen = ({ match, location, history }) => {
                     <Button
                       type='button'
                       variant='light'
-                      onClick={() => removeFromCartHandler(item.id)}
+                      onClick={() => removeFromCartHandler(item.productId)}
                     >
                       <i className='fas fa-trash'></i>
                     </Button>

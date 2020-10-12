@@ -24,7 +24,9 @@ const ProductDetailScreen = ({ match, history }) => {
   const productDetails = useSelector((rootState) => rootState.productDetails);
   const { pending, product, error } = productDetails;
   const cartItems = useSelector((rootState) => rootState.cart.cartItems);
-  const itemInCart = cartItems.find((item) => item.id === match.params.id);
+  const itemInCart = cartItems.find(
+    (item) => item.productId === match.params.id
+  );
   const itemQtyInCart = itemInCart ? itemInCart.qty : 0;
   // dispatch actions
   const dispatch = useDispatch();

@@ -19,11 +19,11 @@ export const listProducts = () => async (dispatch) => {
   }
 };
 
-export const showProductDetails = (id) => async (dispatch) => {
+export const showProductDetails = (productId) => async (dispatch) => {
   try {
     dispatch({ type: actions.PRODUCT_DETAILS_REQUEST });
     const { data } = await axios.get(
-      `${process.env.REACT_APP_API_URL}/api/products/${id}`
+      `${process.env.REACT_APP_API_URL}/api/products/${productId}`
     );
     dispatch({ type: actions.PRODUCT_DETAILS_SUCCESS, payload: data });
   } catch (error) {
