@@ -143,25 +143,25 @@ const OrderDetailsScreen = ({ match }) => {
               <ListGroup.Item>
                 <Row>
                   <Col>Items</Col>
-                  <Col>${order.itemsPrice}</Col>
+                  <Col>${order.itemsPrice.toFixed(2)}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Shipping</Col>
-                  <Col>${order.shippingPrice}</Col>
+                  <Col>${order.shippingPrice.toFixed(2)}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Tax</Col>
-                  <Col>${order.taxPrice}</Col>
+                  <Col>${order.taxPrice.toFixed(2)}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Total</Col>
-                  <Col>${order.totalPrice}</Col>
+                  <Col>${order.totalPrice.toFixed(2)}</Col>
                 </Row>
               </ListGroup.Item>
               {!order.isPaid && (
@@ -170,7 +170,7 @@ const OrderDetailsScreen = ({ match }) => {
                     <Loader />
                   ) : (
                     <PayPalButton
-                      amount={order.totalPrice}
+                      amount={Math.round(order.totalPrice * 100) / 100} // paypal only accept Number of 2 decimals
                       onSuccess={successPaymentHandler}
                     />
                   )}
