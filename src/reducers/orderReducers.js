@@ -5,6 +5,7 @@ import {
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
   ORDER_DETAILS_FAIL,
+  ORDER_DETAILS_RESET,
   ORDER_PAY_REQUEST,
   ORDER_PAY_FAIL,
   ORDER_PAY_SUCCESS,
@@ -12,6 +13,7 @@ import {
   ORDER_HISTORY_REQUEST,
   ORDER_HISTORY_SUCCESS,
   ORDER_HISTORY_FAIL,
+  ORDER_HISTORY_RESET,
 } from '../constants/orderConstants';
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -37,7 +39,6 @@ export const orderCreateReducer = (state = {}, action) => {
 };
 
 export const orderDetailsReducer = (
-  // initial state is shit
   state = { loading: true, order: {} },
   action
 ) => {
@@ -57,6 +58,8 @@ export const orderDetailsReducer = (
         loading: false,
         error: action.payload,
       };
+    case ORDER_DETAILS_RESET:
+      return { loading: true, order: {} };
     default:
       return state;
   }
@@ -89,7 +92,10 @@ export const orderPayReducer = (state = {}, action) => {
   }
 };
 
-export const orderHistoryReducer = (state = { orders: [] }, action) => {
+export const orderHistoryReducer = (
+  state = { orders: [], loading: true },
+  action
+) => {
   switch (action.type) {
     case ORDER_HISTORY_REQUEST:
       return {
@@ -105,6 +111,8 @@ export const orderHistoryReducer = (state = { orders: [] }, action) => {
         loading: false,
         error: action.payload,
       };
+    case ORDER_HISTORY_RESET:
+      return { orders: [], loading: true };
     default:
       return state;
   }

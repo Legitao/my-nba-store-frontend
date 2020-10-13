@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { resetOrderDetails, resetOrderHistory } from './orderActions';
+import { clearCart } from '../actions/cartActions';
 import {
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
@@ -55,6 +57,9 @@ export const logout = () => (dispatch) => {
   dispatch({
     type: USER_LOGOUT,
   });
+  dispatch(clearCart());
+  dispatch(resetOrderDetails());
+  dispatch(resetOrderHistory());
 };
 
 export const register = (name, email, password) => async (dispatch) => {

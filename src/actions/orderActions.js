@@ -6,6 +6,7 @@ import {
   ORDER_DETAILS_FAIL,
   ORDER_DETAILS_SUCCESS,
   ORDER_DETAILS_REQUEST,
+  ORDER_DETAILS_RESET,
   ORDER_PAY_FAIL,
   ORDER_PAY_SUCCESS,
   ORDER_PAY_REQUEST,
@@ -13,6 +14,7 @@ import {
   ORDER_HISTORY_REQUEST,
   ORDER_HISTORY_SUCCESS,
   ORDER_HISTORY_FAIL,
+  ORDER_HISTORY_RESET,
 } from '../constants/orderConstants';
 
 export const createOrder = (order) => async (dispatch, getState) => {
@@ -83,6 +85,12 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
           : error.message,
     });
   }
+};
+
+export const resetOrderDetails = () => {
+  return {
+    type: ORDER_DETAILS_RESET,
+  };
 };
 
 export const payOrder = (orderId, paymentResult) => async (
@@ -162,4 +170,10 @@ export const getOrderHistory = () => async (dispatch, getState) => {
           : error.message,
     });
   }
+};
+
+export const resetOrderHistory = () => {
+  return {
+    type: ORDER_HISTORY_RESET,
+  };
 };

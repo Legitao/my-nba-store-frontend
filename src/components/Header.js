@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import { logout } from '../actions/userActions';
-import { clearCart } from '../actions/cartActions';
 
 const Header = () => {
   const history = useHistory();
@@ -14,7 +13,6 @@ const Header = () => {
 
   const logoutHandler = () => {
     dispatch(logout());
-    dispatch(clearCart());
     history.push('/');
   };
 
