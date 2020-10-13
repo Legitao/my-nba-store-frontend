@@ -16,8 +16,8 @@ const RegisterScreen = ({ location, history }) => {
 
   const dispatch = useDispatch();
 
-  const userRegister = useSelector((state) => state.userRegister);
-  const { loading, error, userInfo } = userRegister;
+  const user = useSelector((state) => state.user);
+  const { pending, error, userInfo } = user;
 
   const redirect = location.search ? location.search.split('=')[1] : '/';
 
@@ -40,7 +40,7 @@ const RegisterScreen = ({ location, history }) => {
     <FormContainer>
       <h1>Sign Up</h1>
       {error && <Message variant='danger'>{error}</Message>}
-      {loading && <Loader />}
+      {pending && <Loader />}
       <Form onSubmit={submitHandler}>
         <Form.Group controlId='name'>
           <Form.Label>Name</Form.Label>
