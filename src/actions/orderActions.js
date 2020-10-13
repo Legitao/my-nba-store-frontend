@@ -9,6 +9,7 @@ import {
   ORDER_PAY_FAIL,
   ORDER_PAY_SUCCESS,
   ORDER_PAY_REQUEST,
+  ORDER_PAY_RESET,
   ORDER_HISTORY_REQUEST,
   ORDER_HISTORY_SUCCESS,
   ORDER_HISTORY_FAIL,
@@ -121,6 +122,12 @@ export const payOrder = (orderId, paymentResult) => async (
           : error.message,
     });
   }
+};
+
+export const resetOrderPay = () => {
+  return {
+    type: ORDER_PAY_RESET,
+  };
 };
 
 export const getOrderHistory = () => async (dispatch, getState) => {

@@ -5,7 +5,11 @@ import { PayPalButton } from 'react-paypal-button-v2';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { getOrderDetails, payOrder } from '../actions/orderActions';
+import {
+  getOrderDetails,
+  payOrder,
+  resetOrderPay,
+} from '../actions/orderActions';
 import { clearCart } from '../actions/cartActions';
 
 const OrderDetailsScreen = ({ match }) => {
@@ -45,8 +49,9 @@ const OrderDetailsScreen = ({ match }) => {
   // When payment in PayPal's popup succeeds, PayPal's UI will fire this handler
   // The handler will update the backend database
   const successPaymentHandler = (paymentResult) => {
-    dispatch(payOrder(orderId, paymentResult));
-    dispatch(clearCart());
+    dispatch(payOrder(orderId, paymentResult)); // update isPaid in backend database
+    dispatch(resetOrderPay()); // reset orderPay slice in Redux to {}
+    dispatch(clearCart()); // clear cart
   };
 
   return loading ? (
