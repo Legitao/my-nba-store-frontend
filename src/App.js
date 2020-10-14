@@ -21,6 +21,7 @@ function App() {
       <main className='py-3'>
         <Container>
           <Route path='/' exact component={HomeScreen} />
+          <Route path='/search/:keyword' component={HomeScreen} />
           <Route path='/products/:id' component={ProductDetailScreen} />
           {/* id is optional for CartScreen, because we can access cart from both Header's cart button and ProductDetailsPage */}
           <Route path='/cart/:id?' component={CartScreen} />

@@ -48,7 +48,7 @@ const ProductDetailScreen = ({ match, history }) => {
 
   useEffect(() => {
     dispatch(showProductDetails(match.params.id));
-  }, [dispatch, match.params.id, productReviewCreate]);
+  }, [dispatch, match.params.id, productReviewCreate]); //put productDetails will rerender infinitely
 
   const addToCardHandler = () => {
     dispatch(addToCart(match.params.id, qty));

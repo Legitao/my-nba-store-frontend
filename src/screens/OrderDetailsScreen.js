@@ -41,6 +41,7 @@ const OrderDetailsScreen = ({ match }) => {
         console.log('paypalSDK tag already exist');
         console.log('sdkReady', sdkReady);
         setSdkReady(true);
+        console.log('sdkReady', sdkReady);
       }
     };
     addPayPalScript();
