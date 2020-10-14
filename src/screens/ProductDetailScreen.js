@@ -46,9 +46,11 @@ const ProductDetailScreen = ({ match, history }) => {
   );
   const itemQtyInCart = itemInCart ? itemInCart.qty : 0;
 
+  // fetch the product details data
+  // When successProductReview changes from undefined to true, it'll run again
   useEffect(() => {
     dispatch(showProductDetails(match.params.id));
-  }, [dispatch, match.params.id, productReviewCreate]); //put productDetails will rerender infinitely
+  }, [dispatch, match.params.id, successProductReview]);
 
   const addToCardHandler = () => {
     dispatch(addToCart(match.params.id, qty));

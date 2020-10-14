@@ -24,6 +24,8 @@ const OrderDetailsScreen = ({ match }) => {
 
   const orderPay = useSelector((state) => state.orderPay);
 
+  // load paypal API and fetch order details data
+  // When orderPay changes, it'll run again
   useEffect(() => {
     const addPayPalScript = async () => {
       const existingScript = document.getElementById('paypalSDK');
@@ -38,15 +40,16 @@ const OrderDetailsScreen = ({ match }) => {
         };
         document.body.appendChild(script);
       } else {
-        console.log('paypalSDK tag already exist');
-        console.log('sdkReady', sdkReady);
+        // console.log('sdk already exist');
+        // console.log(sdkReady);
+        // If go back to this screen second time, sdkReady will have initial value false
+        // But existingScript is true, so we need to setSdkReady here
         setSdkReady(true);
-        console.log('sdkReady', sdkReady);
       }
     };
     addPayPalScript();
     dispatch(getOrderDetails(orderId));
-  }, [dispatch, orderId, sdkReady, orderPay]);
+  }, [dispatch, orderId, orderPay]);
 
   // When payment in PayPal's popup succeeds, PayPal's UI will fire this handler
   // The handler will update the backend database
