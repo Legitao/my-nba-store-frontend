@@ -20,7 +20,7 @@ const Rating = ({ value, numReviews }) => {
 
   return (
     <div className='rating'>
-      <span className='rating-number'> {value} </span>
+      <span className='rating-number'> {value.toFixed(1)} </span>
       {createStars(numFullStar, 'fas fa-star')}
       {createStars(numHalfStar, 'fas fa-star-half-alt')}
       {createStars(numEmptyStar, 'far fa-star')}
