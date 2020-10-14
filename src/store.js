@@ -4,6 +4,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import {
   productListReducer,
   productDetailsReducer,
+  productReviewCreateReducer,
 } from './reducers/productReducer';
 import { cartReducer } from './reducers/cartReducers';
 import { userReducer } from './reducers/userReducers';
@@ -17,6 +18,7 @@ import {
 const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
+  productReviewCreate: productReviewCreateReducer,
   cart: cartReducer,
   user: userReducer,
   orderCreate: orderCreateReducer,

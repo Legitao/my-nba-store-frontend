@@ -24,7 +24,7 @@ const Rating = ({ value, numReviews }) => {
       {createStars(numFullStar, 'fas fa-star')}
       {createStars(numHalfStar, 'fas fa-star-half-alt')}
       {createStars(numEmptyStar, 'far fa-star')}
-      <span> ({numReviews}) </span>
+      {numReviews > 0 && <span> ({numReviews}) </span>}
     </div>
   );
 };

@@ -13,31 +13,57 @@ import {
 import Rating from '../components/Rating';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
-import { showProductDetails } from '../actions/productActions';
+import {
+  showProductDetails,
+  createProductReview,
+} from '../actions/productActions';
 import { addToCart } from '../actions/cartActions';
 
 const ProductDetailScreen = ({ match, history }) => {
+  const dispatch = useDispatch();
+
   // component level state
   const [qty, setQty] = useState(1);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState('');
 
   // app level state from redux
   const productDetails = useSelector((rootState) => rootState.productDetails);
   const { pending, product, error } = productDetails;
   const cartItems = useSelector((rootState) => rootState.cart.cartItems);
+  const user = useSelector((rootState) => rootState.user);
+  const { userInfo } = user;
+  const productReviewCreate = useSelector(
+    (rootState) => rootState.productReviewCreate
+  );
+  const {
+    success: successProductReview,
+    error: errorProductReview,
+  } = productReviewCreate;
+
   const itemInCart = cartItems.find(
     (item) => item.productId === match.params.id
   );
   const itemQtyInCart = itemInCart ? itemInCart.qty : 0;
-  // dispatch actions
-  const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(showProductDetails(match.params.id));
-  }, [dispatch, match.params.id]);
+  }, [dispatch, match.params.id, productReviewCreate]);
 
   const addToCardHandler = () => {
     dispatch(addToCart(match.params.id, qty));
     // redirect to CartScreen
     history.push(`/cart`);
+  };
+
+  const submitReviewHandler = (e) => {
+    e.preventDefault();
+    dispatch(
+      createProductReview(match.params.id, {
+        rating,
+        comment,
+      })
+    );
   };
   // useEffect happens after the render, so the initial render won't have data ready
   // Rating component will show warning because it set props to be required
@@ -145,6 +171,70 @@ const ProductDetailScreen = ({ match, history }) => {
                   </ListGroup.Item>
                 </ListGroup>
               </Card>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={10}>
+              <h1 className='reviews'>Reviews</h1>
+              {product.reviews.length === 0 && (
+                <Message variant='secondary'>No Reviews</Message>
+              )}
+              <ListGroup variant='flush'>
+                {product.reviews.map((review) => (
+                  <ListGroup.Item key={review._id}>
+                    <strong>{review.userName}</strong>
+                    <Rating value={review.rating} />
+                    <p>{review.createdAt.substring(0, 10)}</p>
+                    <p>{review.comment}</p>
+                  </ListGroup.Item>
+                ))}
+                <ListGroup.Item>
+                  <h2>Write a Customer Review</h2>
+                  {errorProductReview && (
+                    <Message variant='danger'>{errorProductReview}</Message>
+                  )}
+                  {userInfo ? (
+                    <Form onSubmit={submitReviewHandler}>
+                      <Form.Group controlId='rating'>
+                        <Form.Label>Rating</Form.Label>
+                        <Form.Control
+                          as='select'
+                          value={rating}
+                          onChange={(e) => setRating(e.target.value)}
+                        >
+                          <option value=''>Select...</option>
+                          <option value='1'>1 - Poor</option>
+                          <option value='2'>2 - Fair</option>
+                          <option value='3'>3 - Good</option>
+                          <option value='4'>4 - Very Good</option>
+                          <option value='5'>5 - Excellent</option>
+                        </Form.Control>
+                      </Form.Group>
+                      <Form.Group controlId='comment'>
+                        <Form.Label>Comment</Form.Label>
+                        <Form.Control
+                          as='textarea'
+                          row='3'
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
+                        ></Form.Control>
+                      </Form.Group>
+                      <Button type='submit' variant='primary'>
+                        Submit
+                      </Button>
+                    </Form>
+                  ) : (
+                    <Message>
+                      Please <Link to='/login'>sign in</Link> to write a review{' '}
+                    </Message>
+                  )}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  {successProductReview && (
+                    <Message variant='success'>Review submitted</Message>
+                  )}
+                </ListGroup.Item>
+              </ListGroup>
             </Col>
           </Row>
         </div>

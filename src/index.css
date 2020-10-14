@@ -12,6 +12,10 @@ h2 {
   padding: 0.5rem 0;
 }
 
+.reviews {
+  margin-top: 5rem;
+}
+
 /* rating color inspired by udemy */
 .rating-star {
   color: #eb8a2f;

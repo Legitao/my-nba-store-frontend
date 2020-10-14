@@ -25,3 +25,18 @@ export const productDetailsReducer = (state = { product: {} }, action) => {
       return state;
   }
 };
+
+export const productReviewCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case actions.PRODUCT_CREATE_REVIEW_REQUEST:
+      return { pending: true };
+    case actions.PRODUCT_CREATE_REVIEW_SUCCESS:
+      return { pending: false, success: true };
+    case actions.PRODUCT_CREATE_REVIEW_FAIL:
+      return { pending: false, error: action.payload };
+    case actions.PRODUCT_CREATE_REVIEW_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
