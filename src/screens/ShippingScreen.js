@@ -6,9 +6,18 @@ import CheckoutSteps from '../components/CheckoutSteps';
 import { saveShippingAddress } from '../actions/cartActions';
 
 const ShippingScreen = ({ history }) => {
-  const cart = useSelector((state) => state.cart);
+  const cart = useSelector((rootState) => rootState.cart);
   const { shippingAddress } = cart;
+  const { userInfo } = useSelector((rootState) => rootState.user);
 
+  // cart is empty
+  if (cart.cartItems.length == 0) {
+    history.push('/');
+  }
+  // cart is not empty, haven't logged in
+  if (!userInfo) {
+    history.push('/login?redirect=shipping');
+  }
   const [address, setAddress] = useState(shippingAddress.address);
   const [city, setCity] = useState(shippingAddress.city);
   const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);

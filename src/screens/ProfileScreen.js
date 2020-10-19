@@ -25,7 +25,7 @@ const ProfileScreen = ({ location, history }) => {
   useEffect(() => {
     if (!userInfo) {
       // haven't logged in
-      history.push('/login');
+      history.push('/login?redirect=profile');
     } else {
       setName(userInfo.name);
       setEmail(userInfo.email);
